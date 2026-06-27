@@ -4,12 +4,6 @@
 
 ---
 
-## Preview
-
-![Portfolio Preview](subhan.jpg)
-
----
-
 ## About
 
 This is my personal portfolio website built entirely from scratch using pure HTML, CSS, and JavaScript — no frameworks, no libraries. Designed with a dark tech aesthetic, smooth scroll animations, and an interactive project carousel.
