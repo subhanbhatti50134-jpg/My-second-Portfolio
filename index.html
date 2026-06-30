@@ -428,38 +428,33 @@
 
   /* ===== PROJECTS — vertical split layout ===== */
   #projects{
-    padding:0;min-height:100vh;overscroll-behavior:contain;
+    padding:0;min-height:100vh;
     border-top:1px solid var(--line);
   }
   #projects > .wrap{
-    position:sticky;top:0;
-    height:100vh;
-    padding:0 60px;
+    padding:80px 60px;
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:0;
     align-items:stretch;
-    overflow:hidden;
+    min-height:100vh;
   }
   @media (max-width:900px){
     #projects > .wrap{
       grid-template-columns:1fr;
-      padding:0 24px;
-      height:auto;
-      min-height:100vh;
+      padding:80px 24px;
+      min-height:auto;
     }
   }
 
   /* LEFT PANEL */
   .proj-left-panel{
     display:flex;flex-direction:column;
-    padding:60px 50px 40px 0;
+    padding:0 50px 40px 0;
     border-right:1px solid var(--line);
-    height:100vh;
-    overflow:hidden;
   }
   @media (max-width:900px){
-    .proj-left-panel{border-right:none;padding:100px 0 40px;height:auto;overflow:visible;}
+    .proj-left-panel{border-right:none;padding:0 0 40px;}
   }
 
   .proj-header{margin-bottom:24px;flex-shrink:0;}
@@ -475,9 +470,9 @@
   /* Slide info area — fills remaining space, clips overflow */
   .proj-info-stage{
     position:relative;
-    flex:1;
+    flex:none;
     overflow:hidden;
-    min-height:0; /* critical: allows flex child to shrink below content size */
+    height:260px;
   }
   .proj-slide-info{
     position:absolute;top:0;left:0;width:100%;height:100%;
@@ -542,7 +537,7 @@
   }
   .proj-counter{display:flex;align-items:center;gap:12px;}
   .proj-counter .num{font-size:11px;letter-spacing:1.5px;color:var(--grey-2);font-weight:700;}
-  .proj-dots{display:flex;gap:6px;}
+  .proj-dots{display:flex;gap:6px;flex-wrap:wrap;max-width:160px;}
   .proj-dots .pdot{width:14px;height:3px;background:var(--grey-3);border-radius:2px;transition:all .35s;}
   .proj-dots .pdot.active{width:26px;background:var(--purple);}
   .proj-nav{display:flex;gap:10px;}
@@ -557,12 +552,11 @@
   /* RIGHT PANEL — image viewer */
   .proj-right-panel{
     display:flex;align-items:center;justify-content:center;
-    padding:60px 0 60px 60px;
+    padding:0 0 0 60px;
     position:relative;
-    height:100vh;
   }
   @media (max-width:900px){
-    .proj-right-panel{padding:0 0 60px;display:none;}
+    .proj-right-panel{padding:40px 0 0;}
   }
 
   .proj-img-stage{
@@ -602,8 +596,6 @@
     position:absolute;inset:0;opacity:.4;filter:blur(50px);pointer-events:none;z-index:1;
     animation:pulseGlow 6s ease-in-out infinite alternate;
   }
-
-  body.projects-locked{overflow:hidden;}
 
   /* ===== TOOLKIT / SKILLS ===== */
   #toolkit{padding:140px 0;border-top:1px solid var(--line);}
@@ -894,6 +886,117 @@
   .sms-star-br{ bottom:14px;right:16px;font-size:20px; }
   .sms-star-bl{ bottom:16px;left:18px;font-size:13px;opacity:.4; }
 
+  /* ===== STREAMCAM TERMINAL UI ===== */
+  .stream-terminal-wrap{
+    width:100%;height:100%;
+    display:flex;flex-direction:column;gap:10px;
+    padding:18px 20px;
+    justify-content:center;
+    background:linear-gradient(135deg,#1a0a2e 0%,#0d0018 100%);
+    position:relative;z-index:2;
+    border-radius:18px;
+  }
+  .stream-terminal-wrap::before{
+    content:'';
+    position:absolute;inset:0;border-radius:18px;
+    background:radial-gradient(ellipse at 50% 40%, rgba(139,50,230,0.45) 0%, rgba(80,0,180,0.2) 50%, transparent 75%);
+    pointer-events:none;z-index:0;
+  }
+  .stream-window{
+    position:relative;z-index:1;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 8px 32px rgba(0,0,0,.7);
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  .stream-titlebar{
+    background:#2b2b2b;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:5px 10px;border-bottom:1px solid #1a1a1a;
+  }
+  .stream-tab{
+    font-family:'Courier New',monospace;font-size:9px;color:#b0b0b0;letter-spacing:.3px;
+  }
+  .stream-winbtns{ display:flex;gap:12px;font-size:9px;color:#888; }
+  .stream-feed{
+    position:relative;
+    background:#0c0c0c;
+    aspect-ratio:16/9;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .stream-feed-glow{
+    position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 45%, rgba(168,85,247,.28) 0%, rgba(0,0,0,0) 65%);
+  }
+  .stream-rec{
+    position:absolute;top:10px;left:12px;
+    display:flex;align-items:center;gap:6px;
+    font-family:'Courier New',monospace;font-size:9px;color:#f87171;letter-spacing:1px;
+  }
+  .stream-rec .dot{
+    width:7px;height:7px;border-radius:50%;background:#f87171;
+    animation:blink 1.2s step-end infinite;
+  }
+  .stream-cam-icon{ opacity:.22; }
+  .stream-overlay-label{
+    position:absolute;bottom:10px;left:12px;
+    font-family:'Courier New',monospace;font-size:9px;color:#c084fc;letter-spacing:.5px;
+  }
+  .stream-body{
+    background:#0c0c0c;padding:10px 14px;
+    font-family:'Courier New',monospace;font-size:10px;line-height:1.7;color:#d4d4d4;
+  }
+
+  /* ===== JEWELLERS RATE PORTAL UI ===== */
+  .jewel-terminal-wrap{
+    width:100%;height:100%;
+    display:flex;align-items:center;justify-content:center;
+    padding:16px 20px;
+    background:linear-gradient(135deg,#1a0a2e 0%,#160520 50%,#0d001a 100%);
+    position:relative;z-index:2;
+    border-radius:18px;
+  }
+  .jewel-terminal-wrap::before{
+    content:'';
+    position:absolute;inset:0;border-radius:18px;
+    background:radial-gradient(ellipse at 70% 30%, rgba(168,85,247,0.4) 0%, rgba(80,0,160,0.18) 45%, transparent 70%);
+    pointer-events:none;z-index:0;
+  }
+  .jewel-window{
+    position:relative;z-index:1;width:100%;
+    border-radius:10px;overflow:hidden;
+    box-shadow:0 0 0 3px rgba(160,80,240,0.55), 0 12px 40px rgba(0,0,0,.8);
+    border:1px solid rgba(160,80,240,0.4);
+    background:#161118;
+  }
+  .jewel-titlebar{
+    background:#241a2e;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:9px 14px;border-bottom:1px solid #1a1220;
+  }
+  .jewel-title-text{
+    font-family:'Inter',sans-serif;font-size:10px;color:#e3c9ff;font-weight:600;letter-spacing:.4px;
+  }
+  .jewel-body{ padding:14px 16px;background:#161118; }
+  .jewel-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .jewel-row:last-child{ border-bottom:none; }
+  .jewel-metal{
+    font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#fff;letter-spacing:.3px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .jewel-dot{ width:8px;height:8px;border-radius:50%;flex-shrink:0; }
+  .jewel-price{
+    font-family:'Courier New',monospace;font-size:11.5px;font-weight:700;color:#c084fc;
+  }
+  .jewel-updated{
+    margin-top:10px;font-family:'Inter',sans-serif;font-size:8.5px;color:#7a7088;
+    letter-spacing:.5px;text-align:right;
+  }
+
   :focus-visible{outline:2px solid var(--purple-light);outline-offset:3px;}
 </style>
 </head>
@@ -1110,7 +1213,7 @@
     <div class="proj-left-panel">
       <div class="proj-header reveal">
         <h2 class="proj-h1">CODE<br><span class="l2">PRACTICE.</span></h2>
-        <p class="proj-sub">A curated set of C++ and web projects from my learning journey so far.</p>
+        <p class="proj-sub">A curated set of C++, Python, and web projects from my learning journey so far.</p>
       </div>
 
       <!-- Slide info items (stacked vertically, one visible at a time) -->
@@ -1181,12 +1284,38 @@
           </a>
         </div>
 
+        <div class="proj-slide-info" data-proj="5">
+          <span class="pnum">06</span>
+          <div class="proj-tags"><span class="proj-tag">PYTHON · FLASK</span></div>
+          <h3 class="proj-title">STREAMCAM</h3>
+          <div class="proj-divider"></div>
+          <span class="proj-stack-label">Stack &amp; Architecture</span>
+          <span class="proj-stack">PYTHON / FLASK / OPENCV</span>
+          <p class="proj-desc">A lightweight Python webcam streaming server built with Flask and OpenCV, serving a live video feed over the local network in real time.</p>
+          <a class="proj-explore" href="https://github.com/subhanbhatti50134-jpg/StreamCam" target="_blank" rel="noopener">
+            View Repository <span class="arrow-circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+          </a>
+        </div>
+
+        <div class="proj-slide-info" data-proj="6">
+          <span class="pnum">07</span>
+          <div class="proj-tags"><span class="proj-tag">TYPESCRIPT · WEB APP</span></div>
+          <h3 class="proj-title">JEWELLERS RATE PORTAL</h3>
+          <div class="proj-divider"></div>
+          <span class="proj-stack-label">Stack &amp; Architecture</span>
+          <span class="proj-stack">TYPESCRIPT / NEXT.JS / VERCEL</span>
+          <p class="proj-desc">A live rate portal built for Saleem Nadeem Jewellers, letting visitors check up-to-date gold and silver rates through a clean, deployed web interface.</p>
+          <a class="proj-explore" href="https://github.com/subhanbhatti50134-jpg/Saleem-Nadeem-Jewellers-Rate-portal" target="_blank" rel="noopener">
+            View Repository <span class="arrow-circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+          </a>
+        </div>
+
       </div><!-- /proj-info-stage -->
 
       <!-- Bottom bar: counter + nav -->
       <div class="proj-bottom-bar">
         <div class="proj-counter">
-          <span class="num" id="proj-num">01 / 05</span>
+          <span class="num" id="proj-num">01 / 07</span>
           <div class="proj-dots" id="proj-dots"></div>
         </div>
         <div class="proj-nav">
@@ -1305,6 +1434,57 @@
           <div class="img-placeholder">
             <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width=".8"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><circle cx="5.5" cy="6.5" r="1"/><circle cx="8.5" cy="6.5" r="1"/></svg>
             <span class="img-label">PORTFOLIO</span>
+          </div>
+        </div>
+
+        <!-- Project 5: StreamCam -->
+        <div class="proj-img-item" data-proj="5">
+          <div class="pv-glow" style="background:radial-gradient(circle,#9333ea,transparent 70%);"></div>
+          <div class="stream-terminal-wrap">
+            <div class="stream-window">
+              <div class="stream-titlebar">
+                <span class="stream-tab">~/streamcam $ python app.py ×</span>
+                <div class="stream-winbtns"><span>─</span><span>□</span><span>✕</span></div>
+              </div>
+              <div class="stream-feed">
+                <div class="stream-feed-glow"></div>
+                <div class="stream-rec"><span class="dot"></span>LIVE</div>
+                <svg class="stream-cam-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width=".8"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                <div class="stream-overlay-label">192.168.1.12:5000/video_feed</div>
+              </div>
+              <div class="stream-body">
+                <p class="atm-line atm-green">* Running on http://0.0.0.0:5000</p>
+                <p class="atm-line atm-grey">Flask + OpenCV — local network stream active</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6: Jewellers Rate Portal -->
+        <div class="proj-img-item" data-proj="6">
+          <div class="pv-glow" style="background:radial-gradient(circle,#c084fc,transparent 70%);"></div>
+          <div class="jewel-terminal-wrap">
+            <div class="jewel-window">
+              <div class="jewel-titlebar">
+                <span class="jewel-title-text">Saleem Nadeem Jewellers — Rate Portal</span>
+                <span class="sms-close">✕</span>
+              </div>
+              <div class="jewel-body">
+                <div class="jewel-row">
+                  <span class="jewel-metal"><span class="jewel-dot" style="background:#f5d142;"></span>Gold (24K / Tola)</span>
+                  <span class="jewel-price">Rs 271,500</span>
+                </div>
+                <div class="jewel-row">
+                  <span class="jewel-metal"><span class="jewel-dot" style="background:#facc6b;"></span>Gold (22K / Tola)</span>
+                  <span class="jewel-price">Rs 248,950</span>
+                </div>
+                <div class="jewel-row">
+                  <span class="jewel-metal"><span class="jewel-dot" style="background:#d8d8d8;"></span>Silver (Tola)</span>
+                  <span class="jewel-price">Rs 3,240</span>
+                </div>
+                <div class="jewel-updated">Last updated: Live — Auto-refreshing</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1490,19 +1670,16 @@ document.querySelectorAll('[data-acc]').forEach(item=>{
   }
 });
 
-/* ===== PROJECT CAROUSEL — vertical split ===== */
+/* ===== PROJECT CAROUSEL — vertical split (no scroll-lock) ===== */
 const infoItems    = document.querySelectorAll('.proj-slide-info');
 const imgItems     = document.querySelectorAll('.proj-img-item');
 const dotsWrap     = document.getElementById('proj-dots');
 const numEl        = document.getElementById('proj-num');
 const prevBtn      = document.getElementById('proj-prev');
 const nextBtn      = document.getElementById('proj-next');
-const projectsSection = document.getElementById('projects');
 const total        = infoItems.length;
 let current        = 0;
 let isAnimating    = false;
-let projectsLocked = false;
-let projectsReleased = false;
 
 // Build dots
 infoItems.forEach((_,i)=>{
@@ -1548,29 +1725,6 @@ prevBtn.classList.add('disabled');
 
 prevBtn.addEventListener('click', ()=>{ if(current>0) goTo(current-1); });
 nextBtn.addEventListener('click', ()=>{ if(current<total-1) goTo(current+1); });
-
-// Scroll lock
-function lockProjectsPage(){ document.body.classList.add('projects-locked'); projectsLocked=true; }
-function unlockProjectsPage(){ document.body.classList.remove('projects-locked'); projectsLocked=false; }
-
-const projectsIO = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(!entry.isIntersecting){ projectsReleased=false; unlockProjectsPage(); return; }
-    if(!projectsReleased) lockProjectsPage();
-  });
-},{threshold:0.35});
-projectsIO.observe(projectsSection);
-
-window.addEventListener('wheel', (event)=>{
-  if(!projectsLocked) return;
-  const goingDown = event.deltaY > 0;
-  const goingUp   = event.deltaY < 0;
-  if(isAnimating) return;
-  if(goingDown && current < total-1){ event.preventDefault(); goTo(current+1); }
-  else if(goingDown && current===total-1){ projectsReleased=true; unlockProjectsPage(); }
-  else if(goingUp && current > 0){ event.preventDefault(); goTo(current-1); }
-  else if(goingUp && current===0){ projectsReleased=false; unlockProjectsPage(); }
-},{ passive:false, capture:true });
 
 /* ===== REVEAL ON SCROLL ===== */
 const revealEls = document.querySelectorAll('.reveal');
